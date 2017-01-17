@@ -419,7 +419,7 @@ public class Detalle_Factura extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        ConexionBase con=new ConexionBase();
         if (CamposLLenos()) {
             textoSql = "update organizador_facturas.detalle_factura set"
                     + " Valor_Sin_IVA='" + jTextField3.getText()
@@ -466,7 +466,7 @@ public class Detalle_Factura extends javax.swing.JFrame {
                     textoSql = "insert into detalle_factura values('" + jTextField1.getText() + "','" + jTextField2.getText() + "','"
                             + (jComboBox1.getSelectedIndex()+1) + "','" + jTextField3.getText() + "','" + jTextField4.getText() + "','"
                             + jTextField5.getText() + "')";
-                    conexion.Insertar(textoSql);
+                    conexion.Insertar1(textoSql);
                 }else{
                     
                     textoSql = "update organizador_facturas.detalle_factura set"
