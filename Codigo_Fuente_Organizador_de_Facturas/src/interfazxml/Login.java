@@ -19,6 +19,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Login-Organizador de Facturas");
         ConexionBase previa=new ConexionBase();
         try {
             llenarCombo();
@@ -39,7 +40,7 @@ public class Login extends javax.swing.JFrame {
             if((1900+fecha.getYear())==Integer.parseInt(resultado.getString("Año")))
                 ver=true;
         if(!ver)
-          cont.InsertDB("insert into limite_gasto values('"+(fecha.getYear()+1900)+"',0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0);");
+          cont.InsertDB("insert into limite_gasto values('"+(fecha.getYear()+1900)+"',0.0,0.0,0.0,0.0,0.0,0.0,0.0);");
     }
     
     public void llenarCombo() throws SQLException {
@@ -91,6 +92,11 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(186, 161, 161));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
         jLabel2.setText("ORGANIZADOR DE FACTURAS");
@@ -105,6 +111,11 @@ public class Login extends javax.swing.JFrame {
 
         jPasswordField1.setBackground(new java.awt.Color(204, 204, 204));
         jPasswordField1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyPressed(evt);
+            }
+        });
 
         jButton1.setBackground(java.awt.SystemColor.activeCaption);
         jButton1.setText("Ingresar");
@@ -213,7 +224,7 @@ public class Login extends javax.swing.JFrame {
                         liGa.setVisible(true);
                         
                     }else{
-                        Organizador orga=new Organizador(getcomboCICompra(variable));
+                        Organizador orga=new Organizador(getcomboCICompra(variable),variable);
                         orga.setVisible(true);
                     }
                 }else
@@ -226,6 +237,18 @@ public class Login extends javax.swing.JFrame {
         }else
             JOptionPane.showMessageDialog(null, "El sistema no contiene Usuarios");
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
+        // TODO add your handling code here:
+        if(evt.getExtendedKeyCode()==10){
+        jButton1.doClick();
+        }
+    }//GEN-LAST:event_jPasswordField1KeyPressed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        System.out.println("cerrar");
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

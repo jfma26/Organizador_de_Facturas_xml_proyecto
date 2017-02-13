@@ -20,6 +20,7 @@ public class LimitesGastos extends javax.swing.JFrame {
         Comprador=a;
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Limite de Gasto Administrador");
         try {
             obtenerTabla();
             LLenarValorTotal();
@@ -33,7 +34,7 @@ public class LimitesGastos extends javax.swing.JFrame {
     public void formatot() {
         String datos[][] = {};
         String Col[] = {"Año", "Valor Vivienda", "Valor Educacion", "Valor Salud", "Valor Vestido",
-            "Valor Alimentacion", "Valor Negocio","Valor Otros","Valor total Anual"};
+            "Valor Alimentacion","Valor Otros","Valor total Anual"};
         model = new DefaultTableModel(datos, Col);
         jTable1.setModel(model);
     }
@@ -54,9 +55,8 @@ public class LimitesGastos extends javax.swing.JFrame {
             model.setValueAt(resultado.getString("Valor_Salud"), codigo, 3);
             model.setValueAt(resultado.getString("Valor_Vestido"), codigo, 4);
             model.setValueAt(resultado.getString("Valor_Alimentacion"), codigo, 5);
-            model.setValueAt(resultado.getString("Valor_Negocio"), codigo, 6);
-            model.setValueAt(resultado.getString("Valor_Otro"), codigo, 7);
-            model.setValueAt(resultado.getString("Valor_Total_Año"), codigo, 8);
+            model.setValueAt(resultado.getString("Valor_Otro"), codigo, 6);
+            model.setValueAt(resultado.getString("Valor_Total_Año"), codigo, 7);
             codigo++;
         }
     }
@@ -90,11 +90,11 @@ public class LimitesGastos extends javax.swing.JFrame {
     
     private void LLenarValorTotal(){
         if(!jTextField1.getText().equals("") && !jTextField2.getText().equals("") && !jTextField3.getText().equals("") &&
-                !jTextField4.getText().equals("") && !jTextField5.getText().equals("") && !jTextField6.getText().equals("") &&
+                !jTextField4.getText().equals("") && !jTextField5.getText().equals("") &&
                 !jTextField7.getText().equals(""))
             jTextField8.setText(String.valueOf(Double.parseDouble(jTextField1.getText())+Double.parseDouble(jTextField2.getText())+
                     Double.parseDouble(jTextField3.getText())+Double.parseDouble(jTextField4.getText())+
-                    Double.parseDouble(jTextField5.getText())+ Double.parseDouble(jTextField6.getText())+
+                    Double.parseDouble(jTextField5.getText())+ 
                     Double.parseDouble(jTextField7.getText())));
         else
             jTextField8.setText("");
@@ -125,7 +125,6 @@ public class LimitesGastos extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
@@ -134,7 +133,6 @@ public class LimitesGastos extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
         jTextField7 = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -162,8 +160,6 @@ public class LimitesGastos extends javax.swing.JFrame {
         jLabel5.setText("Valor de limite Vestido ");
 
         jLabel6.setText("Valor de limite Alimentacion");
-
-        jLabel7.setText("Valor de limite Negocio");
 
         jLabel8.setText("Valor de limite Otros");
 
@@ -204,13 +200,6 @@ public class LimitesGastos extends javax.swing.JFrame {
             }
         });
 
-        jTextField6.setText("0.0");
-        jTextField6.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField6KeyTyped(evt);
-            }
-        });
-
         jTextField7.setText("0.0");
         jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -248,14 +237,12 @@ public class LimitesGastos extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel7)
                             .addComponent(jLabel8)
                             .addComponent(jLabel9))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(59, 59, 59)
@@ -280,9 +267,7 @@ public class LimitesGastos extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -363,9 +348,8 @@ public class LimitesGastos extends javax.swing.JFrame {
         jTextField3.setText(jTable1.getValueAt(filas, 3).toString());
         jTextField4.setText(jTable1.getValueAt(filas, 4).toString());
         jTextField5.setText(jTable1.getValueAt(filas, 5).toString());
-        jTextField6.setText(jTable1.getValueAt(filas, 6).toString());
-        jTextField7.setText(jTable1.getValueAt(filas, 7).toString());
-        jTextField8.setText(jTable1.getValueAt(filas, 8).toString());
+        jTextField7.setText(jTable1.getValueAt(filas, 6).toString());
+        jTextField8.setText(jTable1.getValueAt(filas, 7).toString());
         try {
             setcompro(jTable1.getValueAt(filas, 0).toString());
         } catch (SQLException ex) {
@@ -418,15 +402,6 @@ public class LimitesGastos extends javax.swing.JFrame {
         LLenarValorTotal();
     }//GEN-LAST:event_jTextField5KeyTyped
 
-    private void jTextField6KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyTyped
-        char c = evt.getKeyChar();
-        if (Character.isLetter(c)) {
-            getToolkit().beep();
-            evt.consume();
-        }
-        LLenarValorTotal();
-    }//GEN-LAST:event_jTextField6KeyTyped
-
     private void jTextField7KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyTyped
         char c = evt.getKeyChar();
         if (Character.isLetter(c)) {
@@ -447,7 +422,6 @@ public class LimitesGastos extends javax.swing.JFrame {
                     + "', Valor_Salud='" + jTextField3.getText()
                     + "', Valor_Vestido='" + jTextField4.getText()
                     + "', Valor_Alimentacion='" + jTextField5.getText()
-                    + "', Valor_Negocio='" + jTextField6.getText()
                     + "', Valor_Otro='" + jTextField7.getText()
                     + "', Valor_Total_Año='" + jTextField8.getText()
                     + "' where Año='" + jComboBox1.getSelectedItem().toString() + "';";
@@ -464,7 +438,7 @@ public class LimitesGastos extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         this.setVisible(false);
-        Organizador orga=new Organizador(Comprador);
+        Organizador orga=new Organizador(Comprador,"Administrador");
         orga.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -514,7 +488,6 @@ public class LimitesGastos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -525,7 +498,6 @@ public class LimitesGastos extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     // End of variables declaration//GEN-END:variables

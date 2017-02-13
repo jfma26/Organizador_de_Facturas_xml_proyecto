@@ -10,7 +10,6 @@ import static xml.LeerArchivo.NombreArchivo;
 
 public class Convertir {
     public Convertir() {
-         System.out.println("Introduce una cadena de texto a buscar: ");
 	 String texto1 = "![CDATA[";
          String texto2="]]";
          int j=0;

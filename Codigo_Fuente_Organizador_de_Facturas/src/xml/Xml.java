@@ -35,7 +35,7 @@ public class Xml {
     public Xml(String archivo){
          Proveedor="INSERT INTO Proveedor VALUES (";
         Comprador="INSERT INTO Comprador VALUES (";
-        Factura="INSERT INTO Factura VALUES (";
+        Factura=" VALUES (";
         
         ubicacionArchivo=archivo;
         try{
@@ -113,10 +113,10 @@ public void leerConfiguracion(){
             for (temp = 0; temp < nAuxiliar.getLength(); temp++) {
                 String detalle="";
                 detalle=eElement2.getElementsByTagName("descripcion").item(temp).getTextContent();
-                detalle+=","+eElement2.getElementsByTagName("precioTotalSinImpuesto").item(temp).getTextContent();
-                detalle+=","+eElement2.getElementsByTagName("valor").item(temp).getTextContent();
+                detalle+=";"+eElement2.getElementsByTagName("precioTotalSinImpuesto").item(temp).getTextContent();
+                detalle+=";"+eElement2.getElementsByTagName("valor").item(temp).getTextContent();
                 //detalle+=","+eElement2.getElementsByTagName("baseImponible").item(temp).getTextContent();
-                detalle+=","+(Double.parseDouble(eElement2.getElementsByTagName("precioTotalSinImpuesto").item(temp).getTextContent())
+                detalle+=";"+(Double.parseDouble(eElement2.getElementsByTagName("precioTotalSinImpuesto").item(temp).getTextContent())
                         +Double.parseDouble(eElement2.getElementsByTagName("valor").item(temp).getTextContent()));
                 list.add(detalle);
             }
@@ -133,10 +133,9 @@ public void leerConfiguracion(){
   }
 
 public void leerConfiguracion1(){
-    System.out.println("entrooo");
         Proveedor="INSERT INTO Proveedor VALUES (";
         Comprador="INSERT INTO Comprador VALUES (";
-        Factura="INSERT INTO Factura VALUES (";
+        Factura=" VALUES (";
             try{
            int temp=0;
             File fXmlFile = new File(ubicacionArchivo);
@@ -174,16 +173,17 @@ public void leerConfiguracion1(){
     }
          
   }
-    public void EjecutarConsultaSQL(boolean verificar,String cedula){
+    public void EjecutarConsultaSQL(boolean verificar,String cedula,String cabeceraFactura){
          
        //  ConexionBase con1=new ConexionBase();
         Factura+=cedula+"');";
         
+        
         if(verificar){
             con.Insertar1(Proveedor);     
             //con.InsertDB(Factura);
-            con.Insertar1(Factura);
-            System.out.println(Proveedor+"\n"+Factura);
+            con.Insertar1(cabeceraFactura+Factura);
+            System.out.println(Proveedor+"\n"+cabeceraFactura+Factura);
         }else
             JOptionPane.showMessageDialog(null, "Selecione el archivo XML a guardar");
     }

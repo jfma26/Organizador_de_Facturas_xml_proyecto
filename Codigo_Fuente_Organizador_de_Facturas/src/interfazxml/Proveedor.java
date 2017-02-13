@@ -60,9 +60,10 @@ public class Proveedor extends javax.swing.JFrame {
         jComboBox1.enable(false);
     }
 
-    public Proveedor() {
+    public Proveedor(String nombre) {
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Proveedor-"+nombre);
         try {
 
             obtenerTabla();
@@ -459,7 +460,7 @@ public class Proveedor extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Proveedor().setVisible(true);
+               
             }
         });
     }

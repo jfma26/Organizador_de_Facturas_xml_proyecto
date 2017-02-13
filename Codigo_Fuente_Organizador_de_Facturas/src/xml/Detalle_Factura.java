@@ -29,6 +29,7 @@ public class Detalle_Factura extends javax.swing.JFrame {
     private int n = 0;
     private double totalSinIVA=0,totalIVA=0,totalConIVA=0;
     private List<String> lista;
+    private boolean booleanSimple=true;
     
     
     private void setTotalSinIVA(double a){
@@ -50,6 +51,7 @@ public class Detalle_Factura extends javax.swing.JFrame {
         return this.totalConIVA;
     }
     public Detalle_Factura(String factura, String proveedor,String comprador, List<String> lis) {
+        incre=0;
         lista=lis;
         initComponents();
         setLocationRelativeTo(null);
@@ -58,18 +60,49 @@ public class Detalle_Factura extends javax.swing.JFrame {
         jTextField2.setText(Proveedor);
         LLenarCampos(incre++);
         try {
-            obtenerTabla();
+            llenarCombo();
+            obtenerTabla();            
         } catch (SQLException ex) {
             Logger.getLogger(Detalle_Factura.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public Detalle_Factura(String factura, String proveedor,String comprador, String sinIva,String IVA,String conIva) {
+        booleanSimple=false;
+        initComponents();
+        setLocationRelativeTo(null);
+        Factura=factura; Proveedor=proveedor;Comprador=comprador;
+        jTextField1.setText(Factura);
+        jTextField2.setText(Proveedor);
+        jTextField3.setText(sinIva);
+        jTextField4.setText(IVA);
+        jTextField5.setText(conIva);
+        try {
+            llenarCombo();
+            obtenerTabla();            
+        } catch (SQLException ex) {
+            Logger.getLogger(Detalle_Factura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void llenarCombo() throws SQLException {
+        ConexionBase cont = new ConexionBase();
+        String sentencia = "SELECT * FROM Tipo_Gasto";
+        ResultSet resultado = cont.SelectDB1(sentencia);
+        int codigo = 0;
+        while (resultado.next()) {
+            jComboBox1.addItem(resultado.getString("Nombre_Tipo_Gasto"));
+            codigo++;
+        }
+    }
+    
     
     private void LLenarCampos(int a){
         String contenido[]=new String[4];
         int num=0;
         if(lista.size()>a)
         {
-            StringTokenizer tokens=new StringTokenizer(lista.get(a), ",");
+            StringTokenizer tokens=new StringTokenizer(lista.get(a), ";");
             while(tokens.hasMoreTokens())
                 contenido[num++]=tokens.nextToken();
             jTextField6.setText(contenido[0]);
@@ -79,7 +112,6 @@ public class Detalle_Factura extends javax.swing.JFrame {
         }
     }
     
-
     private Detalle_Factura() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -159,7 +191,7 @@ public class Detalle_Factura extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<String>();
         jLabel3 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -188,7 +220,6 @@ public class Detalle_Factura extends javax.swing.JFrame {
 
         jLabel6.setText("Tipo de Gastos");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vivienda", "Educacion", "Salud", "Vestido", "Alimentación", "Negocio", "Otro" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -442,7 +473,6 @@ public class Detalle_Factura extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
         ConexionBase conexion=new ConexionBase();
         if (CamposLLenos()) {
             try {
@@ -468,7 +498,8 @@ public class Detalle_Factura extends javax.swing.JFrame {
             LimpiarVentana();
             try {
                 obtenerTabla();
-                LLenarCampos(incre++);
+                if(booleanSimple)
+                    LLenarCampos(incre++);
             } catch (SQLException ex) {
                 Logger.getLogger(Detalle_Factura.class.getName()).log(Level.SEVERE, null, ex);
             }

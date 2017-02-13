@@ -1,5 +1,6 @@
 package interfazxml;
 
+import Reportes.ExportarExcel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -40,11 +41,11 @@ public class Factura extends javax.swing.JFrame {
         formatot();
         ConexionBase cont = new ConexionBase();
         String sentencia = "";
-        if (Integer.parseInt(RUC_Comprador)!= 1723012553) {
+        if (Integer.parseInt(RUC_Comprador) != 1723012553) {
             sentencia = "SELECT * FROM organizador_facturas.factura where Factura.RUCoCI_Comprador='" + RUC_Comprador + "';";
         } else {
             sentencia = "SELECT * FROM organizador_facturas.factura;";
-            RUC_Comprador=String.valueOf(1723012553);
+            RUC_Comprador = String.valueOf(1723012553);
         }
 
         System.out.println(sentencia);
@@ -121,11 +122,14 @@ public class Factura extends javax.swing.JFrame {
         }
         return rucpro;
     }
+    public String Nombre;
 
-    public Factura(String pro) {
+    public Factura(String pro, String nombre) {
         RUC_Comprador = pro;
+        Nombre=nombre;
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Facturas Personales-"+nombre);
         try {
             obtenerTabla();
             llenarCombo();
@@ -226,7 +230,7 @@ public class Factura extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("grabar");
+        jButton4.setText("exportar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -426,7 +430,7 @@ public class Factura extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        String variable = jComboBox2.getSelectedItem().toString();
+        /*String variable = jComboBox2.getSelectedItem().toString();
         String fecha = "";
         fecha += jDateChooser1.getCalendar().get(Calendar.YEAR) + "-"
                 + (jDateChooser1.getCalendar().get(Calendar.MONTH) + 1) + "-" + jDateChooser1.getCalendar().get(Calendar.DAY_OF_MONTH);
@@ -453,7 +457,8 @@ public class Factura extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Llenar todos los campos");
-        }
+        }*/
+        ExportarExcel exportar = new ExportarExcel(jTable1);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
@@ -516,7 +521,7 @@ public class Factura extends javax.swing.JFrame {
                 System.out.println(textoSql);
                 con.InsertDB1(textoSql);
                 this.setVisible(false);
-                Detalle_Factura fac = new Detalle_Factura(jTextField1.getText(), getcombopro(variable), RUC_Comprador);
+                Detalle_Factura fac = new Detalle_Factura(jTextField1.getText(), getcombopro(variable), RUC_Comprador,Nombre);
                 fac.setVisible(true);
 
                 jTextField3.setText(String.valueOf(fac.getTotalSinIVA()));

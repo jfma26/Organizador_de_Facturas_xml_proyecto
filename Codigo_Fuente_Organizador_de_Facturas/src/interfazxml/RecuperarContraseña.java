@@ -16,6 +16,7 @@ public class RecuperarContraseña extends javax.swing.JFrame {
     public RecuperarContraseña() {
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Recuperar Contraseña");
         try {
             llenarCombo();
             llenarCombo2();

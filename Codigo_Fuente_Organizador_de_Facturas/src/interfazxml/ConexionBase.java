@@ -32,14 +32,17 @@ public class ConexionBase {
     public ConexionBase() {
         bd = "organizador_facturas";
         user = "root";
-        password = LeerArchivo(true);
+      // password="ligader";
+       password = LeerArchivo(true);
         url = "jdbc:mysql://localhost:3306/" + bd;
-
+        boolean control=false;
+//do{
         try {
             try {
                 Class.forName("com.mysql.jdbc.Driver").newInstance();
             } catch (InstantiationException | IllegalAccessException ex) {
                 Logger.getLogger(ConexionBase.class.getName()).log(Level.SEVERE, null, ex);
+                password = LeerArchivo(false);
             }
             conn = (Connection) DriverManager.getConnection(url, user, password);
             if (conn != null) {
@@ -47,11 +50,14 @@ public class ConexionBase {
             }
         } catch (SQLException ex) {
             password = LeerArchivo(false);
+            control=false;
             //JOptionPane.showMessageDialog(null, "Hubo un problema al intentar conectarse con la base de datos " + url);
         } catch (ClassNotFoundException ex) {
-            System.out.println(ex);
-            JOptionPane.showMessageDialog(null, ex);
+          //  System.out.println(ex);
+           // JOptionPane.showMessageDialog(null, ex);
         }
+//}while(control==true);
+            
     }
 
     public void InsertDB(String Sql) {
@@ -150,7 +156,9 @@ public class ConexionBase {
             }
         } else {
             try {
+
                 File fe = new File("Base.txt");
+                fe.delete();
                 BufferedWriter salida;
                 salida = new BufferedWriter(new FileWriter(fe));
                 salida.write(JOptionPane.showInputDialog(null, "Ingresar la Contraseña de la Base de Datos MySQL", "Contraseña MySQL", 1));
